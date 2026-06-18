@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ═══ TRADIE SITE TEMPLATE v2 (human-crafted, anti-AI-slop). Edit only the CONFIG block. ═══ -->
+<title>Loading…</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2310120f'/%3E%3Cpath d='M17 5L8 18h6l-2 9 11-14h-7z' fill='%23ffc21a'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0c0e; --bg2:#121418; --panel:#16191e; --line:#262b33;
+    --ink:#f3f1ec; --body:#b8bcc4; --mut:#7e8590;
+    --hi:#ffc21a;          /* hi-vis accent (workwear) — edit in CONFIG.brandColor */
+    --hi2:#ff8a00;
+    --disp:'Anton',Impact,'Arial Narrow Bold',sans-serif;
+    --sans:'Figtree',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--body);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  /* film grain — the "a human made this" signal */
+  body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;position:relative;z-index:2}
+  h1,h2,h3{font-family:var(--disp);font-weight:400;color:var(--ink);line-height:.96;letter-spacing:.01em;text-transform:uppercase}
+  .hi{color:var(--hi)}
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--hi);color:#1a1402;font-weight:800;padding:16px 26px;border-radius:4px;font-size:1rem;border:0;cursor:pointer;transition:transform .12s,background .12s;font-family:var(--sans);letter-spacing:.01em}
+  .btn:hover{transform:translateY(-2px);background:#ffce42}
+  .btn.line{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+  .btn.line:hover{border-color:var(--hi);color:var(--hi);background:transparent}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+  .kick{font-family:var(--sans);font-weight:800;font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--hi)}
+
+  /* top bar */
+  .util{background:#08090a;border-bottom:1px solid var(--line);font-size:.82rem;color:var(--mut)}
+  .util .wrap{display:flex;justify-content:space-between;align-items:center;height:36px}
+  .util b{color:var(--ink);font-weight:700}
+  @media(max-width:620px){.util .lic{display:none}}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:40;background:rgba(11,12,14,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-size:1.4rem;color:var(--ink);text-transform:uppercase;letter-spacing:.02em}
+  .logo .bolt{width:34px;height:34px;flex:none}
+  .nav-r{display:flex;align-items:center;gap:24px}
+  .nav-r a.lnk{font-weight:600;font-size:.94rem;color:var(--body)}
+  .nav-r a.lnk:hover{color:var(--hi)}
+  .nav-call{font-family:var(--disp);font-size:1.15rem;color:var(--ink)!important;letter-spacing:.02em}
+  @media(max-width:860px){.nav-r a.lnk{display:none}}
+
+  /* HERO — asymmetric, left-weighted, photo-panel right */
+  header{border-bottom:1px solid var(--line)}
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;min-height:560px}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}}
+  .hero-l{padding:64px 24px 60px;max-width:660px;margin-left:auto;width:100%;align-self:center}
+  .hero-l .wrapn{max-width:600px;margin-left:auto;padding-right:30px}
+  @media(max-width:900px){.hero-l .wrapn{padding-right:0}}
+  .rate{display:inline-flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line);border-radius:100px;padding:7px 15px;font-size:.86rem;margin-bottom:22px;color:var(--ink)}
+  .rate .stars{color:var(--hi);letter-spacing:1px}
+  .hero h1{font-size:clamp(2.7rem,6vw,4.6rem);margin-bottom:18px}
+  .kin{font-family:var(--sans);font-weight:700;color:var(--mut);font-size:1rem;margin:2px 0 18px;height:1.4em}
+  .rotw{color:var(--hi);display:inline-block;animation:rotwin .5s cubic-bezier(.2,.7,.2,1)}
+  @keyframes rotwin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .hero p.sub{font-size:1.14rem;color:var(--body);margin-bottom:28px;max-width:500px}
+  nav.scrolled{box-shadow:0 6px 24px rgba(0,0,0,.5)}
+  .trust .c .n{transition:none}
+  .hero .cta{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+  .hero .micro{margin-top:24px;display:flex;gap:8px 22px;flex-wrap:wrap;font-size:.9rem;color:var(--mut)}
+  .hero .micro b{color:var(--ink);font-weight:700}
+  /* photo panel (placeholder for the tradie's real van/team shot) */
+  .hero-r{background:
+      linear-gradient(180deg,rgba(11,12,14,.15),rgba(11,12,14,.85)),
+      repeating-linear-gradient(45deg,#15171c 0 22px,#171a20 22px 44px);
+    position:relative;display:flex;align-items:flex-end;padding:26px;min-height:340px;border-left:1px solid var(--line)}
+  @media(max-width:900px){.hero-r{border-left:0;border-top:1px solid var(--line);min-height:260px}}
+  .hero-r .tape{position:absolute;top:24px;right:24px;background:var(--hi);color:#1a1402;font-family:var(--disp);font-size:.9rem;padding:6px 14px;transform:rotate(3deg);letter-spacing:.04em}
+  .hero-r .ph{color:var(--mut);font-size:.84rem;border:1.5px dashed #3a414c;border-radius:6px;padding:14px 16px;background:rgba(8,9,10,.5);max-width:300px}
+  .hero-r .ph b{color:var(--body)}
+
+  section{padding:78px 0;position:relative}
+  .head{max-width:680px;margin-bottom:42px}
+  .head h2{font-size:clamp(2rem,4.6vw,3rem);margin:12px 0}
+  .head p{color:var(--mut);font-size:1.05rem;max-width:560px}
+
+  /* trust strip */
+  .trust{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+  @media(max-width:760px){.trust .wrap{grid-template-columns:repeat(2,1fr)}}
+  .trust .c{background:var(--bg2);padding:24px 20px;text-align:center}
+  .trust .c .n{font-family:var(--disp);font-size:1.8rem;color:var(--hi)}
+  .trust .c .l{font-size:.86rem;color:var(--mut);margin-top:3px}
+
+  /* services — numbered bento, NO emoji */
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+  @media(max-width:820px){.bento{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.bento{grid-template-columns:1fr}}
+  .svc{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:26px;grid-column:span 2;position:relative;overflow:hidden;transition:.2s}
+  .svc:nth-child(1){grid-column:span 3}.svc:nth-child(2){grid-column:span 3}
+  @media(max-width:820px){.svc,.svc:nth-child(1),.svc:nth-child(2){grid-column:span 1}}
+  .svc:hover{border-color:#3a414c;transform:translateY(-3px)}
+  .svc .no{font-family:var(--disp);font-size:1.1rem;color:var(--hi);opacity:.5}
+  .svc h3{font-family:var(--sans);font-weight:800;text-transform:none;font-size:1.22rem;color:var(--ink);margin:10px 0 7px;letter-spacing:0;line-height:1.2}
+  .svc p{color:var(--mut);font-size:.96rem}
+  .svc::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--hi);transform:scaleY(0);transform-origin:top;transition:.25s}
+  .svc:hover::after{transform:scaleY(1)}
+
+  /* why — split, asymmetric */
+  .why-wrap{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+  @media(max-width:860px){.why-wrap{grid-template-columns:1fr;gap:32px}}
+  .why li{display:flex;gap:15px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .why li:last-child{border-bottom:0}
+  .why .num{font-family:var(--disp);font-size:1.5rem;color:var(--hi);line-height:1;flex:none;width:42px}
+  .why h3{font-family:var(--sans);font-weight:800;text-transform:none;font-size:1.08rem;color:var(--ink);letter-spacing:0}
+  .why p{color:var(--mut);font-size:.95rem;margin-top:3px}
+  .vanpanel{background:repeating-linear-gradient(45deg,#15171c 0 22px,#171a20 22px 44px);border:1px solid var(--line);border-radius:10px;min-height:330px;display:flex;align-items:flex-end;padding:24px;position:relative}
+  .vanpanel .tag{position:absolute;top:20px;left:20px;font-family:var(--disp);color:var(--hi);font-size:1rem;letter-spacing:.03em}
+  .vanpanel .ph{color:var(--mut);font-size:.84rem;border:1.5px dashed #3a414c;border-radius:6px;padding:13px 15px;background:rgba(8,9,10,.5)}
+
+  /* reviews — honest Google placeholder, NO fake names */
+  #reviews{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .gbadge{display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px 26px;max-width:560px;margin-bottom:24px}
+  .gbadge .big{font-family:var(--disp);font-size:3rem;color:var(--ink);line-height:1}
+  .gbadge .stars{color:var(--hi);font-size:1.2rem;letter-spacing:2px}
+  .gbadge .sub{color:var(--mut);font-size:.9rem;margin-top:3px}
+  .gbadge .glogo{font-weight:800;font-size:1.05rem}.gbadge .glogo b1{color:#4285F4}
+  .revnote{color:var(--mut);font-size:.95rem;border-left:3px solid var(--hi);padding:10px 0 10px 16px;max-width:560px}
+
+  /* area */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:8px 15px;font-weight:600;color:var(--body);font-size:.92rem}
+
+  /* CTA */
+  .band{background:var(--hi);color:#1a1402;border-radius:12px;padding:54px 30px;display:grid;grid-template-columns:1.4fr .6fr;gap:24px;align-items:center}
+  @media(max-width:760px){.band{grid-template-columns:1fr;text-align:center}}
+  .band h2{color:#1a1402;font-size:clamp(2rem,4.6vw,3rem)}
+  .band p{color:#3a2e02;margin-top:8px;font-weight:600}
+  .band .btn{background:#10120f;color:var(--hi)}.band .btn:hover{background:#000}
+  .band .actions{display:flex;flex-direction:column;gap:11px}
+
+  footer{padding:46px 0 110px;border-top:1px solid var(--line);color:var(--mut);font-size:.9rem}
+  footer .top{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:22px}
+  footer .legal{font-size:.82rem;color:#5a616b;border-top:1px solid var(--line);padding-top:18px}
+  footer a:hover{color:var(--hi)}
+
+  .callbar{position:fixed;bottom:0;left:0;right:0;z-index:50;display:none;box-shadow:0 -6px 22px rgba(0,0,0,.4)}
+  .callbar a{flex:1;text-align:center;padding:16px;font-weight:800;font-family:var(--sans)}
+  .callbar .c{background:var(--hi);color:#1a1402}.callbar .q{background:#16191e;color:var(--ink);border-top:1px solid var(--line)}
+  @media(max-width:860px){.callbar{display:flex}footer{padding-bottom:92px}}
+  .madeby{text-align:center;font-size:.78rem;color:#4a515b;padding:14px;background:#08090a}
+</style>
+</head>
+<body>
+
+<div class="util"><div class="wrap">
+  <span class="lic" id="u-lic">Licensed & insured · Lic #<b id="u-licno">[REC/Lic]</b></span>
+  <span>Open <b id="u-hours"></b> · <b id="u-phone"></b></span>
+</div></div>
+
+<nav><div class="wrap">
+  <a class="logo" href="#"><svg class="bolt" viewBox="0 0 32 32"><path d="M17 4L7 19h7l-2 9 12-15h-8z" fill="var(--hi)"/></svg><span id="nv-name"></span></a>
+  <div class="nav-r">
+    <a class="lnk" href="#services">Services</a><a class="lnk" href="#why">Why us</a>
+    <a class="lnk" href="#areas">Areas</a><a class="nav-call" id="nv-call" href="#"></a>
+    <a class="btn" id="nv-quote" href="#contact">Free quote</a>
+  </div>
+</div></nav>
+
+<header><div class="hero">
+  <div class="hero-l reveal"><div class="wrapn">
+    <div class="rate" id="h-rate"><span class="stars">★★★★★</span> <span id="h-ratetext"></span></div>
+    <h1 id="h-head"></h1>
+    <div class="kin">On the job today: <span id="rot" class="rotw">power points</span></div>
+    <p class="sub" id="h-sub"></p>
+    <div class="cta">
+      <a class="btn" id="h-call" href="#">Call <span id="h-callnum"></span></a>
+      <a class="btn line" href="#contact">Get a free quote</a>
+    </div>
+    <div class="micro">
+      <span><b>Same-day</b> callouts</span><span><b>Upfront</b> fixed pricing</span><span><b>Workmanship</b> guaranteed</span>
+    </div>
+  </div></div>
+  <div class="hero-r reveal">
+    <div class="tape" id="h-tape">LOCAL & LICENSED</div>
+    <div class="ph">📷 <b>Your van, team & real job photos go here</b> — we shoot these with you on sign-up. (Demo placeholder.)</div>
+  </div>
+</div></header>
+
+<div class="trust"><div class="wrap" id="trust-row"></div></div>
+
+<section id="services"><div class="wrap">
+  <div class="head reveal"><div class="kick">What we do</div><h2 id="sv-h"></h2><p id="sv-p"></p></div>
+  <div class="bento" id="sv-grid"></div>
+</div></section>
+
+<section id="why"><div class="wrap why-wrap">
+  <div class="reveal">
+    <div class="kick">Why us</div><h2 id="wy-h" style="margin:12px 0 18px;font-size:clamp(1.9rem,4vw,2.7rem)"></h2>
+    <ul class="why" id="wy-list"></ul>
+  </div>
+  <div class="vanpanel reveal">
+    <div class="tag" id="wy-tag"></div>
+    <div class="ph">📷 <b>Real team & before/after job photos</b> slot in here — the #1 trust-builder for trades. (Demo placeholder.)</div>
+  </div>
+</div></section>
+
+<section id="reviews"><div class="wrap">
+  <div class="head reveal"><div class="kick">Reputation</div><h2>Trusted by locals</h2></div>
+  <div class="gbadge reveal">
+    <div><div class="big" id="rv-score"></div><div class="stars">★★★★★</div></div>
+    <div><div class="glogo"><b1>G</b1>oogle Reviews</div><div class="sub" id="rv-sub"></div></div>
+  </div>
+  <p class="revnote reveal">Your real, live Google reviews wire in here automatically on launch — no fake quotes, just the genuine 5-star feedback your customers already leave.</p>
+</div></section>
+
+<section id="areas"><div class="wrap reveal">
+  <div class="head"><div class="kick">Service area</div><h2 id="ar-h"></h2><p id="ar-p"></p></div>
+  <div class="chips" id="ar-chips"></div>
+</div></section>
+
+<section id="contact"><div class="wrap reveal">
+  <div class="band">
+    <div><div class="kick" style="color:#3a2e02">Free · no-obligation</div><h2 id="cta-h"></h2><p id="cta-p"></p></div>
+    <div class="actions">
+      <a class="btn" id="cta-call" href="#" style="justify-content:center">📞 Call <span id="cta-num"></span></a>
+      <a class="btn" id="cta-wa" target="_blank" rel="noopener" style="justify-content:center;background:#10120f;color:var(--hi)">💬 Message us</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="top">
+    <div>
+      <a class="logo" href="#" style="font-size:1.2rem"><svg class="bolt" viewBox="0 0 32 32" style="width:26px;height:26px"><path d="M17 4L7 19h7l-2 9 12-15h-8z" fill="var(--hi)"/></svg><span id="ft-name"></span></a>
+      <p style="margin-top:10px;max-width:340px" id="ft-tag"></p>
+    </div>
+    <div>
+      <p><b style="color:var(--ink)">Call:</b> <a id="ft-call" href="#"></a></p>
+      <p style="margin-top:5px" id="ft-hours2"></p>
+      <p style="margin-top:5px" id="ft-areas"></p>
+    </div>
+  </div>
+  <div class="legal">
+    <span id="ft-legal"></span> · ABN [your ABN] · Licence #[your licence] · $5M public liability insured.
+  </div>
+</div></footer>
+<div class="madeby">Website by TradieSites — websites that win tradies more work.</div>
+
+<div class="callbar">
+  <a class="c" id="bar-call" href="#">📞 Call now</a><a class="q" href="#contact">Free quote</a>
+</div>
+
+<script>
+/* ═══════════════ EDIT PER PROSPECT ═══════════════ */
+const CONFIG = {
+  "name": "Nick The Tiler",
+  "trade": "Tiler",
+  "icon": "◻️",
+  "phone": "+61 402 152 946",
+  "suburb": "Bendigo",
+  "region": "Bendigo & surrounds",
+  "since": "2015",
+  "hours": "Mon–Sat 7am–6pm",
+  "brandColor": "#ffc21a",
+  "rating": "5.0",
+  "reviewCount": "trusted locally",
+  "headline": "",
+  "sub": "Fast, friendly, fully-licensed tiler work for homes & businesses. Same-day callouts, upfront pricing, and workmanship we guarantee.",
+  "servicesIntro": "No job too big or small — here's how we can help.",
+  "services": [
+    {
+      "ic": "🛁",
+      "t": "Bathroom Tiling",
+      "d": "Walls, floors & waterproofing for a flawless finish."
+    },
+    {
+      "ic": "🍳",
+      "t": "Kitchen & Splashbacks",
+      "d": "Splashbacks, benchtops & feature tiling."
+    },
+    {
+      "ic": "🏡",
+      "t": "Floor Tiling",
+      "d": "Living areas, hallways, outdoor & large-format tiles."
+    },
+    {
+      "ic": "💧",
+      "t": "Waterproofing",
+      "d": "Certified waterproofing — protect against costly leaks."
+    },
+    {
+      "ic": "🔨",
+      "t": "Repairs & Regrout",
+      "d": "Cracked tiles, regrouting & re-sealing."
+    },
+    {
+      "ic": "🏢",
+      "t": "Commercial Tiling",
+      "d": "Shops, offices & strata — on time, to spec."
+    }
+  ],
+  "whyHead": "Local tilers you can actually rely on.",
+  "why": [
+    {
+      "t": "On time, every time",
+      "d": "We turn up when we say we will — and call if we're running late."
+    },
+    {
+      "t": "Upfront fixed pricing",
+      "d": "You approve the price before we start. No nasty surprises."
+    },
+    {
+      "t": "Licensed & insured",
+      "d": "Fully licensed, insured, and every job done to standard."
+    },
+    {
+      "t": "Guaranteed work",
+      "d": "We stand behind our workmanship — if it's not right, we fix it."
+    }
+  ],
+  "reviews": [
+    {
+      "n": "Sarah W.",
+      "l": "Bendigo",
+      "t": "Came out same day and sorted it fast — explained everything. Brilliant service."
+    },
+    {
+      "n": "Dave M.",
+      "l": "Bendigo",
+      "t": "Tidy work and a fair fixed price. Wouldn't use anyone else now."
+    },
+    {
+      "n": "Priya K.",
+      "l": "Bendigo",
+      "t": "Quick to respond, friendly, left the place spotless. Highly recommend."
+    }
+  ],
+  "areas": [
+    "Bendigo"
+  ]
+};
+/* ═══════════════════════════════════════════════════ */
+const $=id=>document.getElementById(id);
+const C=CONFIG, trade=(C.trade||"Tradie"), tl=trade.toLowerCase(), sub=C.suburb||"your area";
+if(C.brandColor) document.documentElement.style.setProperty('--hi',C.brandColor);
+const tel="tel:"+(C.phone||"").replace(/[^0-9+]/g,"");
+const wa="https://wa.me/"+(C.phone||"").replace(/[^0-9]/g,"")+"?text="+encodeURIComponent("Hi "+C.name+", I'd like a quote please.");
+document.title=`${C.name} | ${trade} ${sub}`;
+const head=C.headline||`${sub}'s trusted ${tl}s.`;
+const subt=C.sub||`Fast, friendly, fully-licensed ${tl} work for homes & businesses across ${C.region}. Same-day callouts, upfront pricing, and workmanship we stand behind.`;
+const set=(id,v)=>{const e=$(id);if(e)e.textContent=v};
+set("nv-name",C.name);set("ft-name",C.name);set("h-head",head);set("h-sub",subt);
+set("h-ratetext",`${C.rating||"5.0"} on Google · ${C.reviewCount||"trusted locally"}`);
+set("h-callnum",C.phone);set("nv-call",C.phone);set("u-phone",C.phone);set("u-hours",C.hours);
+set("h-tape",`LOCAL · ${C.since? "SINCE "+C.since : "LICENSED"}`);
+set("sv-h",`${trade} services, done properly.`);
+set("sv-p",C.servicesIntro||`No job too big or small — here's how we help around ${sub}.`);
+set("wy-h",C.whyHead||`Local ${tl}s you can actually rely on.`);
+set("wy-tag","ON THE TOOLS, ON TIME");
+set("rv-score",C.rating||"5.0");set("rv-sub",`Rated by locals across ${sub}`);
+set("ar-h",`Servicing ${C.region}`);set("ar-p",`Local to ${sub} — fast response across the whole area.`);
+const art=/^[aeiou]/i.test(tl)?"an":"a";
+set("cta-h",`Need ${art} ${tl}? Let's sort it.`);set("cta-p","Call now for a fast, free, no-obligation quote.");
+set("cta-num",C.phone);set("ft-call",C.phone);set("ft-hours2","Open "+C.hours);
+set("ft-areas","Serving "+C.region);set("ft-tag",`Your trusted local ${tl} — ${C.region}.`);
+set("ft-legal",`© ${C.name}`);
+[["h-call",tel],["nv-call",tel],["cta-call",tel],["bar-call",tel],["ft-call",tel]].forEach(([i,h])=>{if($(i))$(i).href=h});
+$("cta-wa").href=wa;$("nv-quote");
+// trust row
+$("trust-row").innerHTML=[
+  [(C.since?(new Date().getFullYear()-(+C.since))+"+":"10+"),"Years local"],
+  ["$5M","Public liability"],
+  [(C.rating||"5.0")+"★","Google rated"],
+  ["100%","Workmanship guarantee"],
+].map(([n,l])=>`<div class="c"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+// services — numbered, no emoji
+$("sv-grid").innerHTML=C.services.map((s,i)=>`<div class="svc reveal"><div class="no">${String(i+1).padStart(2,"0")}</div><h3>${s.t}</h3><p>${s.d}</p></div>`).join("");
+// why — numbered
+$("wy-list").innerHTML=C.why.map((w,i)=>`<li><span class="num">${String(i+1).padStart(2,"0")}</span><div><h3>${w.t}</h3><p>${w.d}</p></div></li>`).join("");
+// areas
+$("ar-chips").innerHTML=(C.areas||[sub]).map(a=>`<span class="chip">${a}</span>`).join("");
+// reveal (staggered) — with a fail-safe so content is NEVER left hidden
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){const e=x.target;const sib=[...e.parentElement.children].filter(n=>n.classList.contains('reveal'));e.style.transitionDelay=(Math.min(sib.indexOf(e),5)*70)+'ms';e.classList.add('in');io.unobserve(e)}}),{threshold:.05,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+// safety net: reveal anything still hidden after 3.5s (guards against missed observers / odd viewports)
+setTimeout(()=>document.querySelectorAll('.reveal:not(.in)').forEach(e=>{e.style.transitionDelay='0ms';e.classList.add('in')}),3500);
+
+const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+// rotating hero word (Slack-style word-swap) from the services
+(function(){const el=$("rot");if(!el||reduce)return;const words=C.services.map(s=>s.t.toLowerCase());let i=0;
+  setInterval(()=>{i=(i+1)%words.length;el.style.animation='none';el.offsetHeight;el.textContent=words[i];el.style.animation='';},1900);})();
+// count-up trust numbers on view
+function countUp(el){const m=(el.textContent||'').match(/^(\D*)([\d.]+)(\D*)$/);if(!m)return;const pre=m[1],end=parseFloat(m[2]),suf=m[3],dec=(m[2].split('.')[1]||'').length;let t0=null;
+  function step(t){if(!t0)t0=t;const p=Math.min((t-t0)/900,1);const v=(end*(0.2+0.8*p));el.textContent=pre+(p>=1?end.toFixed(dec):v.toFixed(dec))+suf;if(p<1)requestAnimationFrame(step)}requestAnimationFrame(step)}
+if(!reduce){const tio=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){countUp(x.target);tio.unobserve(x.target)}}),{threshold:.5});
+  document.querySelectorAll('.trust .c .n').forEach(n=>tio.observe(n));}
+// nav scroll shadow
+const navEl=document.querySelector('nav');addEventListener('scroll',()=>{navEl.classList.toggle('scrolled',scrollY>20)},{passive:true});
+</script>
+</body>
+</html>
